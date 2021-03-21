@@ -8,15 +8,15 @@
     <div>
         <h1>Tous mes articles</h1>
         <ul>
-          @if($articles != null)
-            @foreach($articles as $article)
+          <?php if($articles != null): ?>
+            <?php $__currentLoopData = $articles; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $article): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
             <li>
               <?php echo $article['title'] ?>
               <?php echo $article['content'] ?>
               <?php echo $article['author'] ?>
             </li>
-            @endforeach
-          @endif
+            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+          <?php endif; ?>
         </ul>
             <form method="POST" action="http://localhost:9999/blog">
                 <br>
@@ -32,3 +32,4 @@
 </body>
 
 </html>
+<?php /**PATH /home/app/views/index.blade.php ENDPATH**/ ?>

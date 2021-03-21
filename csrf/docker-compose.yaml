@@ -1,0 +1,67 @@
+version: '3.1'
+
+services:
+
+  web:
+    container_name: csrf-web
+    image: nginx:1.15-alpine
+    depends_on:
+      - php
+    ports:
+      - "9999:80"
+    volumes:
+      - .:/home/app:ro
+      - ../.docker/local/nginx:/etc/nginx/conf.d:ro
+
+  php:
+    container_name: csrf-php
+    build: ../.docker/local/php
+    depends_on:
+      - db
+    volumes:
+      - .:/home/app:rw
+
+  php_hacker:
+    container_name: csrf-hacker-php
+    build: ../.docker/local/php
+    volumes:
+      - ./hacker/:/home/app:rw
+
+  web:
+    container_name: csrf-web
+    image: nginx:1.15-alpine
+    depends_on:
+      - php
+    ports:
+      - "9999:80"
+    volumes:
+      - .:/home/app:ro
+      - ../.docker/local/nginx:/etc/nginx/conf.d:ro
+
+  web_hacker:
+    container_name: csrf-hacker-web
+    image: nginx:1.15-alpine
+    depends_on:
+      - php_hacker
+    ports:
+      - "9998:80"
+    volumes:
+      - ./hacker/:/home/app:ro
+      - ../.docker/local/nginx_hacker:/etc/nginx/conf.d:ro
+
+
+  db:
+    image: mysql
+    command: --default-authentication-plugin=mysql_native_password
+    restart: always
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: unsecure
+
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 8080:8080

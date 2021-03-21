@@ -80,19 +80,17 @@ class Mysql
 
   public function boot()
   {
-    $sql = "CREATE TABLE IF NOT EXISTS `articles` (
+    $sql = "CREATE TABLE IF NOT EXISTS `users` (
       `id` int(11) NOT NULL AUTO_INCREMENT,
-      `title` varchar(235) NOT NULL,
-      `content` varchar(235) NOT NULL,
-      `author` varchar(235) NOT NULL,
+      `name` varchar(235) NOT NULL,
+      `password` varchar(235) NOT NULL,
+      `email` varchar(235) NOT NULL,
       PRIMARY KEY (`id`)
     ) ENGINE=InnoDB  DEFAULT CHARSET=latin1;";
 
-    $sql = "CREATE TABLE IF NOT EXISTS `users` (
+    $sql .= "CREATE TABLE IF NOT EXISTS `polls` (
       `id` int(11) NOT NULL AUTO_INCREMENT,
-      `email` varchar(235) NOT NULL,
-      `password` varchar(235) NOT NULL,
-      `role` varchar(235) NOT NULL,
+      `name` varchar(235) NOT NULL,
       PRIMARY KEY (`id`)
     ) ENGINE=InnoDB  DEFAULT CHARSET=latin1;";
 
