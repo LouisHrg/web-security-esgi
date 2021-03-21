@@ -1,0 +1,6 @@
+{
+    "require": {
+        "leafs/leaf": "^2.4",
+        "leafs/veins": "^1.2"
+    }
+}
