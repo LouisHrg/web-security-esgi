@@ -25,7 +25,20 @@ $app->post("/login", function() use($app, $blade) {
   {
     $mysql = new Mysql;
 
-    $toto = $mysql->select('users', '*', ['email' => $email]);
+    $sql = "SELECT * FROM users WHERE email = '".$email."'";
+
+    $result = mysqli_multi_query($mysql->conn, $sql);
+
+    if(!$result) return $result;
+
+    $output = [];
+
+    if ($result = $mysql->conn->store_result()) {
+       while($row = mysqli_fetch_assoc($result)) {
+          $output[] = $row;
+       }
+    }
+
   }
 
   return $app->response()->redirect("/login");

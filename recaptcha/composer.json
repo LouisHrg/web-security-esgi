@@ -1,6 +1,8 @@
 {
     "require": {
         "leafs/leaf": "^2.4",
-        "leafs/veins": "^1.2"
+        "leafs/veins": "^1.2",
+        "guzzlehttp/guzzle": "^7.0",
+        "vlucas/phpdotenv": "^5.3"
     }
 }
