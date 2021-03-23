@@ -13,7 +13,6 @@
             <div class="g-recaptcha" data-sitekey="<?php echo e($token); ?>"></div>
             <button type="submit"> Valider </button>
         </form>
-
     </div>
 </body>
 

@@ -4,8 +4,8 @@ require_once __DIR__ . "/vendor/autoload.php";
 require_once __DIR__ . "/helpers/Tooling.php";
 
 
-
 $app = new Leaf\App;
+$blade = new Leaf\Blade;
 $blade->configure("views", "views/cache");
 
 $dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
