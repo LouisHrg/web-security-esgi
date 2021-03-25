@@ -25,18 +25,27 @@ $app->post("/login", function() use($app, $blade) {
   {
     $mysql = new Mysql;
 
-    $sql = "SELECT * FROM users WHERE email = '".$email."'";
+    // En tant normal sur PHP, utilisez PDO !
 
-    $result = mysqli_multi_query($mysql->conn, $sql);
+    $sql = "SELECT id FROM users WHERE email = ?";
 
-    if(!$result) return $result;
+    if ($stmt = mysqli_prepare($mysql->conn, $sql)) {
 
-    $output = [];
 
-    if ($result = $mysql->conn->store_result()) {
-       while($row = mysqli_fetch_assoc($result)) {
-          $output[] = $row;
-       }
+        // addslashes permet d'enlever les quotes d'une chaine de caractère
+        mysqli_stmt_bind_param($stmt, "s", addslashes($email));
+
+        mysqli_stmt_execute($stmt);
+
+        mysqli_stmt_bind_result($stmt, $userId);
+
+        mysqli_stmt_fetch($stmt);
+
+        // On a récupéré l'id de l'utilisateur de manière sécurisée
+        // on peut faire d'autres traitements par la suite
+        dd($userId);
+
+        mysqli_stmt_close($stmt);
     }
 
   }

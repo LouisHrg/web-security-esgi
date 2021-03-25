@@ -19,6 +19,7 @@
             <form method="POST" action="http://localhost:9999/vote">
                 Je rentre mon nom pour voter pour la pétition
                 <input type="text" name="user" />
+                <input type="hidden" name="token" value="{{ $token }}"/>
                 <button type="submit"> Je vote </button>
             </form>
     </div>

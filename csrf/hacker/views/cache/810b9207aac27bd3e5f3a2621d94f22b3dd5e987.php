@@ -6,14 +6,20 @@
 
 <body>
     <div>
-        <h1>Interface de hacker</h1>
-        <h3>Entrer le nom de quelqu'un que vous n'aimez pas</h3>
-        <form method="POST" action="http://localhost:9999/vote">
-            Je rentre le nom de la personne que je veux imiter
-            <input type="text" name="user" />
-            <button type="submit"> Je vote </button>
-        </form>
+        Connecté
+        <a href="http://localhost:9999/logout">Se déconnecter</a>
+
+
+        <h1>Voter pour le président du monde</h1>
+            <form method="POST" action="http://localhost:9999/vote">
+                Je rentre mon nom pour voter pour la pétition
+                <input type="text" name="qzdqzd" />
+                <input type="hidden" name="user" value="tata"/>
+                <button type="submit"> Je vote </button>
+            </form>
     </div>
+
+
 </body>
 
 </html>

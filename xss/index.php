@@ -16,7 +16,9 @@ $app->get("/", function() use($app) {
   $title = isset($_GET['title']) ? $_GET['title'] : 'My title';
   $content = isset($_GET['content']) ? $_GET['content'] : 'My content';
 
-  $app->response()->markup('Title : '.$title.'<br> The content : '.$content);
+
+  // htmlspecialchars permet de transformer les caractères spéciaux en entités HTML
+  $app->response()->markup('Title : '.htmlspecialchars($title).'<br> The content : '.htmlspecialchars($content));
 });
 
 
@@ -32,16 +34,16 @@ $app->get("/blog", function() use($app, $blade) {
 $app->post("/blog", function() use($app) {
 
 
-  $title = $app->request()->get('title');
-  $content = $app->request()->get('content');
-  $author = $app->request()->get('author');
+  $title = $_POST['title'];
+  $content = $_POST['content'];
+  $author = $_POST['author'];
 
   $mysql = new Mysql;
 
   $mysql->insert('articles', [
-    'title' => $title,
-    'content' => $content,
-    'author' => $author,
+    'title' => htmlspecialchars($title),
+    'content' => htmlspecialchars($content),
+    'author' => htmlspecialchars($author),
   ]);
 
   return $app->response()->redirect("/blog");

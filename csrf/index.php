@@ -57,11 +57,25 @@ $app->get("/vote", function() use($app, $blade) {
     return $app->response()->redirect("/");
   }
 
+  session_start();
+
+  // On créer un token
+  $token = md5(uniqid());
+
+  // ... qu'on ajoute dans la session
+  // la session est uniquement lisible côté serveur
+  $_SESSION['token'] = $token;
+
   $mysql = new Mysql;
   $polls = $mysql->select('polls', '*');
   $user = $_COOKIE['name'];
 
-  echo $blade->make('vote', ['polls' => $polls, 'user' => $user])->render();
+  // on envoie le token dans la page pour l'afficher dans le formulaire
+  echo $blade->make('vote', [
+    'polls' => $polls,
+    'user' => $user,
+    'token' => $token,
+  ])->render();
 });
 
 $app->post("/vote", function() use($app, $blade) {
@@ -70,7 +84,19 @@ $app->post("/vote", function() use($app, $blade) {
     return $app->response()->redirect("/");
   }
 
+
   $toVote = $app->request()->get('user');
+
+  // On recupère le token envoyé dans le formulaire
+  $token = $app->request()->get('token');
+
+  session_start();
+
+  // On verifie que le token du formulaire correspond bien au token stocké en session
+  if($_SESSION['token'] !== $token)
+  {
+    return $app->response()->redirect("/");
+  }
 
   $mysql = new Mysql;
   $mysql->insert('polls', ['name' => $toVote]);
