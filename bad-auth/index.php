@@ -28,6 +28,8 @@ $app->get('/logout', function() use ($app) {
 
 $app->post("/login", function() use($app, $blade) {
 
+  session_start();
+
   $email = $app->request()->get('email');
   $password = $app->request()->get('password');
 
@@ -37,10 +39,10 @@ $app->post("/login", function() use($app, $blade) {
   if(isset($result[0]))
   {
     if($result[0]['password'] === $password){
-      setcookie('auth', true);
-      setcookie('email', $email);
-      setcookie('name', $result[0]['name']);
-      setcookie('id', $result[0]['id']);
+      $_SESSION['auth'] = true;
+      $_SESSION['email'] = $email;
+      $_SESSION['name'] = $result[0]['name'];
+      $_SESSION['id'] = $result[0]['id'];
 
       return $app->response()->redirect("/admin");
     }
@@ -51,12 +53,13 @@ $app->post("/login", function() use($app, $blade) {
 
 $app->get("/admin", function() use($app, $blade) {
 
-  if(!$_COOKIE['auth']){
+  session_start();
+
+  if(!$_SESSION['email']){
     return $app->response()->redirect("/");
   }
 
-  $mysql = new Mysql;
-  $user = $_COOKIE['name'];
+  $user = $_SESSION['name'];
 
   echo $blade->make('admin', ['user' => $user])->render();
 });

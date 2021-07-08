@@ -6,7 +6,7 @@
 
 <body>
     <div>
-        Connecté en tant que {{ $_COOKIE['name'] }}
+        Connecté en tant que {{ $user }}
         <a href="http://localhost:9999/logout">Se déconnecter</a>
     </div>
 </body>

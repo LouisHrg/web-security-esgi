@@ -6,7 +6,7 @@
 
 <body>
     <div>
-        Connecté en tant que <?php echo e($_COOKIE['name']); ?>
+        Connecté en tant que <?php echo e($user); ?>
 
         <a href="http://localhost:9999/logout">Se déconnecter</a>
     </div>
